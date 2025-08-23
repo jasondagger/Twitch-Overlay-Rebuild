@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bukxgstyjcubi"]
+
+[ext_resource type="Shader" path="res://Overlay/Shaders/ToonShader.gdshader" id="1_vj7fj"]
+[ext_resource type="Texture2D" uid="uid://bmwf0c52qu3lv" path="res://Emotes/Textures/ToonRamp.png" id="2_s3oxn"]
+
+[resource]
+render_priority = 5
+shader = ExtResource("1_vj7fj")
+shader_parameter/minimumBrightness = 0.05
+shader_parameter/maximumBrightness = 0.95
+shader_parameter/color = Color(0.627451, 0.768627, 1, 1)
+shader_parameter/colorRamp = ExtResource("2_s3oxn")
