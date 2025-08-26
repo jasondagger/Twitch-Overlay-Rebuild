@@ -177,9 +177,9 @@ namespace Overlay
         }
 
         private const int c_accessTokenRefreshTimeInMilliseconds = 3600000;
-        private const string c_authorizationCode = "AQCsZ-HvlDJyhOOJ52TZsvnNZQAibiQXupDEjdTrK497FW8oTXj1q8P3vLGm89yP8JIfZkIR_jO3s7Rn63RPRW6xC9ocRWPPal4xqEaBLiglYZBIS3TL0XJ84rI-2axiODaFH27kLnLGyd38hBBzE9aieNBdCi0_B5B1i-iizw4eswPVp84qWyarLLea9u6N4fj3QZUs_9TJ6od-zflrYl34oy4Q0iEpvdy9YbJwd2vsNxf8shpcE2fsHD5zA4wGw60znkZRkGAtqzkg5ZFbaOVCIXco";
+        private const string c_authorizationCode = "AQBxDUDZTC9E5U_CTKnJgG5fKVrm46RgG4tWUA70OIhPV7obEFj57UCMWzpAj5CnvjkXlwQcLB_-G5c3haJ6Hi-CvvlbXS2nnABcB83rtaPDXoO4bXgL2D70KC-D605D39BXmFBry4wEq-0NN0I8EaNt4roSx-SFVGkJxSDGt6HyMDjm5yaJaD5lXfgdnTIajkOEn-qzdEOxzXLkgFN1qd42KWjDdz-_dBXs8zpJ-K5fUhiCrQHJRVtqqj7M-S7kYZsHOd_ZDbgrntZbNcQ4Jo3ddeY0";
 
-        private const string c_redirectUri = "http://localhost:8888/callback";
+        private const string c_redirectUri = "http://127.0.0.1:8888/callback";
         private const string c_uriAPI = "https://api.spotify.com/v1";
         private const string c_uriHttpPrefixSecure = "https://";
         private const string c_uriHttpPrefixInsecure = "http://";
@@ -1304,8 +1304,8 @@ namespace Overlay
                 uri: $"https://accounts.spotify.com/authorize?" +
                      $"client_id={m_spotifyData.ClientId}&" +
                      $"response_type=code&" +
-                     $"redirect_uri={c_redirectUri}&" +
-                     $"scope={Uri.EscapeDataString(c_userAccessScopes)}"
+                     $"scope={Uri.EscapeDataString(c_userAccessScopes)}&" +
+                     $"redirect_uri={c_redirectUri}"
             );
         }
 

@@ -6,7 +6,6 @@ namespace Overlay
 	using System.Collections.Generic;
     using System.Linq;
     using System.Net.WebSockets;
-    using System.Runtime.Versioning;
     using System.Text;
     using System.Text.Json;
     using System.Text.RegularExpressions;
@@ -20,7 +19,6 @@ namespace Overlay
     using RequiredFileType = ApplicationManager.RequiredFileType;
 	using UILayoutType = UIManager.UILayoutType;
 
-    [SupportedOSPlatform(platformName: "windows")]
     public sealed partial class TwitchBot : Node
 	{
 		public override void _EnterTree()
@@ -37,18 +35,20 @@ namespace Overlay
 			double delta
 		)
 		{
-			if (m_messageTimestamps.Count > 0u)
+			if (m_messageTimestamps.Count <= 0u) 
+				return;
+			
+			var elapsedMilliseconds = Time.GetTicksMsec();
+			if (m_messageTimestamps.Peek() + c_minimumMessageTimerInMilliseconds < elapsedMilliseconds)
 			{
-				var elapsedMilliseconds = Time.GetTicksMsec();
-				if (m_messageTimestamps.Peek() + c_minimumMessageTimerInMilliseconds < elapsedMilliseconds)
-				{
-					m_messageTimestamps.Dequeue();
-				}
+				m_messageTimestamps.Dequeue();
 			}
 		}
 
 		public override void _Ready()
 		{
+			//RetrieveOAuthAccessCode();
+			//RequestAccessToken();
             RequestAccessTokenWithRefreshToken();
 		}
 
@@ -68,7 +68,7 @@ namespace Overlay
         {
             AccountAge = 0u,
             Commands,
-            CS,
+            Cs,
             Current,
             CurrentSong,
             Date,
@@ -87,7 +87,7 @@ namespace Overlay
             SongRequest,
             SongSkip,
             Specs,
-            SR,
+            Sr,
             Steam,
             TextToSpeech,
             Time,
@@ -123,10 +123,10 @@ namespace Overlay
         private const string c_twitchWebSocketMessagedelimiter = "\r\n";
 
         private const string c_twitchBadges = "moderator/1";
-        private const string c_twitchDisplayName = "SmoothGPT";
-        private const string c_twitchOAuthAccessCode = "xvcaejreammtrejxlc9pjurbvj3m9j";
+        private const string c_twitchDisplayName = "SmoothGPT_";
+        private const string c_twitchOAuthAccessCode = "8jm4d85embh56myot5796xsbo2i2wg";
         private const string c_twitchUserAccessScopes = "chat:read chat:edit";
-        private const string c_twitchUserName = "smoothgpt";
+        private const string c_twitchUserName = "smoothgpt_";
 
         private static readonly Dictionary<TwitchChatAutomatedMessageType, string> c_automatedMessages = new()
 		{
@@ -222,7 +222,7 @@ namespace Overlay
 			// Bot
 			{ TwitchChatCommandType.AccountAge,   "!accountage"	 },
             { TwitchChatCommandType.Commands,     "!commands"	 },
-            { TwitchChatCommandType.CS,		      "!cs"			 },
+            { TwitchChatCommandType.Cs,		      "!cs"			 },
             { TwitchChatCommandType.Current,	  "!current"	 },
             { TwitchChatCommandType.CurrentSong,  "!currentsong" },
             { TwitchChatCommandType.Date,         "!date"		 },
@@ -241,7 +241,7 @@ namespace Overlay
             { TwitchChatCommandType.SongRequest,  "!songrequest" },
             { TwitchChatCommandType.SongSkip,	  "!songskip"	 },
             { TwitchChatCommandType.Specs,		  "!specs"		 },
-            { TwitchChatCommandType.SR,			  "!sr"			 },
+            { TwitchChatCommandType.Sr,			  "!sr"			 },
             { TwitchChatCommandType.Steam,        "!steam"		 },
             { TwitchChatCommandType.TextToSpeech, "!tts"		 },
             { TwitchChatCommandType.Time,         "!time"		 },
@@ -502,7 +502,7 @@ namespace Overlay
                     );
                     break;
 
-				case TwitchChatCommandType.CS:
+				case TwitchChatCommandType.Cs:
 				case TwitchChatCommandType.Current:
                 case TwitchChatCommandType.CurrentSong:
 				case TwitchChatCommandType.Song:
@@ -576,7 +576,7 @@ namespace Overlay
                     break;
 
                 case TwitchChatCommandType.SongRequest:
-				case TwitchChatCommandType.SR:
+				case TwitchChatCommandType.Sr:
                     HandleWebSocketMessagePrivMsgSongRequest(
                         webSocketMessage: webSocketMessage
                     );
@@ -1417,11 +1417,15 @@ namespace Overlay
             );
             var twitchChatMessageId = webSocketMessage.Tags[key: "id"];
 
+            var channelModerators = m_twitchManager.GetChannelModerators();
             var channelSubscribers = m_twitchManager.GetChannelSubscribers();
             if (
                 channelSubscribers.ContainsKey(
 					key: userName
-                ) is false
+                ) is false &&
+	                channelModerators.ContainsKey(
+		                key: userName
+	            ) is false
             )
             {
                 var message =$"{twitchUserName}, you must be subscribed in order to use this command";
@@ -2032,7 +2036,7 @@ namespace Overlay
             return commandType switch
             {
                 TwitchChatCommandType.AccountAge or
-				TwitchChatCommandType.CS or
+				TwitchChatCommandType.Cs or
                 TwitchChatCommandType.Current or
                 TwitchChatCommandType.CurrentSong or
                 TwitchChatCommandType.Discord or
@@ -2074,7 +2078,7 @@ namespace Overlay
 					),
 
                 TwitchChatCommandType.SongRequest or
-				TwitchChatCommandType.SR =>
+				TwitchChatCommandType.Sr =>
 					IsOverlayCommandSongRequestValid(
 						text: text
 					),
@@ -2198,7 +2202,7 @@ namespace Overlay
 		{
             var normalizedText = text.ToLower();
             return normalizedText.StartsWith(
-                value: $"{c_commands[key: TwitchChatCommandType.SR]} "
+                value: $"{c_commands[key: TwitchChatCommandType.Sr]} "
             ) is true ||
 			normalizedText.StartsWith(
 				value: $"{c_commands[key: TwitchChatCommandType.SongRequest]} "
@@ -2867,7 +2871,7 @@ namespace Overlay
 		)
 		{
 			var userName = webSocketMessage.UserName;
-			var isSubscriber = webSocketMessage.Tags[key: "subscriber"].ToInt() > 0u;
+			var isSubscriber = webSocketMessage.Tags[key: "subscriber"].ToInt() > 0u || webSocketMessage.Tags[key:"user-type"] == "mod";
 
             string color;
             if (isSubscriber is true)
@@ -2989,8 +2993,8 @@ namespace Overlay
             var searchText = trimmedText.Remove(
                 startIndex: 0,
                 count: trimmedText.StartsWith(
-                    c_commands[key: TwitchChatCommandType.SR]
-                ) ? c_commands[key: TwitchChatCommandType.SR].Length + 1 :
+                    c_commands[key: TwitchChatCommandType.Sr]
+                ) ? c_commands[key: TwitchChatCommandType.Sr].Length + 1 :
                     c_commands[key: TwitchChatCommandType.SongRequest].Length + 1
             );
             if (

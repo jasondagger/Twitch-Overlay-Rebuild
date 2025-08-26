@@ -23,10 +23,10 @@ namespace Overlay
 
         protected override void HandleSwapToUILayoutToDefault()
         {
-            m_shelfImageAudioWave.Visible = false;
-            m_shelfImageBackground.Visible = false;
-            m_nameplateController.Visible = false;
-            m_notifierController.Visible = false;
+            m_shelfImageAudioWave.Visible = true;
+            m_shelfImageBackground.Visible = true;
+            m_nameplateController.Visible = true;
+            m_notifierController.Visible = true;
         }
 
         protected override void HandleSwapToUILayoutToMTG()

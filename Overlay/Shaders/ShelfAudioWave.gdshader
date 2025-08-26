@@ -298,21 +298,21 @@ void fragment()
 		UV
 	);	
 		
-	const float negativeU = -UV.x;
-	const float negativeV = -UV.y;
-	const float oneMinusU = 1.0f - UV.x;
-	const float oneMinusV = 1.0f - UV.y;
+	float negativeU = -UV.x;
+	float negativeV = -UV.y;
+	float oneMinusU = 1.0f - UV.x;
+	float oneMinusV = 1.0f - UV.y;
 	
-	const vec2 negativeUOneMinusV = vec2(
+	vec2 negativeUOneMinusV = vec2(
 		negativeU,
 		oneMinusV
 	);
-	const vec2 oneMinusUNegativeV = vec2(
+	vec2 oneMinusUNegativeV = vec2(
 		oneMinusU,
 		negativeV
 	);
 	
-	const vec3 colorNoiseA = SampleNoiseAHorizontal(
+	vec3 colorNoiseA = SampleNoiseAHorizontal(
 		UV
 	) + SampleNoiseAHorizontal(
 		negativeUOneMinusV
@@ -322,7 +322,7 @@ void fragment()
 		oneMinusUNegativeV
 	);
 
-	const vec3 colorNoiseB = SampleNoiseBHorizontal(
+	vec3 colorNoiseB = SampleNoiseBHorizontal(
 		UV
 	) + SampleNoiseBHorizontal(
 		negativeUOneMinusV
@@ -332,7 +332,7 @@ void fragment()
 		oneMinusUNegativeV
 	);
 	
-	const vec3 colorNoiseC = SampleNoiseCHorizontal(
+	vec3 colorNoiseC = SampleNoiseCHorizontal(
 		UV
 	) + SampleNoiseCHorizontal(
 		negativeUOneMinusV
@@ -342,7 +342,7 @@ void fragment()
 		oneMinusUNegativeV
 	);
 		
-	const vec3 colorNoiseFinal = colorNoiseA + colorNoiseB + colorNoiseC;
+	vec3 colorNoiseFinal = colorNoiseA + colorNoiseB + colorNoiseC;
 	
 	vec3 colorNoiseAdditive = texture(
 		textureNoise,

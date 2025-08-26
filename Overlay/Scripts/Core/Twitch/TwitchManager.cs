@@ -247,7 +247,7 @@ namespace Overlay
             "subscriber"
         };
 
-        private const string c_twitchOAuthAccessCode = "nb6l068qpl4eyqqyiclej9y71cbrg3";
+        private const string c_twitchOAuthAccessCode = "7rufcahqjbdbcjttlrkn4llq2ybr9g";
 		private const string c_twitchUriRedirect = "http://localhost:3000";
         private const string c_twitchUriAPI = "https://api.twitch.tv/helix";
 		private const string c_twitchUriOAuth = "https://id.twitch.tv/oauth2/token";
@@ -1314,24 +1314,24 @@ namespace Overlay
 					);
 #endif
 
-					if (m_customUserDatas is not null)
-					{
-                        var subscriberDatas = m_customUserDatas;
-                        foreach (var subscriberData in subscriberDatas)
-                        {
-							var subscriberUsername = subscriberData.Key;
-							if (
-								m_channelSubscribers.ContainsKey(
-                                    key: subscriberUsername
-                                ) is false
-							)
-							{
-								m_customUserDatas.Remove(
-                                    key: subscriberUsername
-                                );
-							}
-                        }
-                    }
+					//if (m_customUserDatas is not null)
+					//{
+                    //    var subscriberDatas = m_customUserDatas;
+                    //    foreach (var subscriberData in subscriberDatas)
+                    //    {
+					//		var subscriberUsername = subscriberData.Key;
+					//		if (
+					//			m_channelSubscribers.ContainsKey(
+                    //                key: subscriberUsername
+                    //            ) is false
+					//		)
+					//		{
+					//			m_customUserDatas.Remove(
+                    //                key: subscriberUsername
+                    //            );
+					//		}
+                    //    }
+                    //}
 				}
 			}
 			else
