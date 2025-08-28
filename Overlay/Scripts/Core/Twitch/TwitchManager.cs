@@ -223,23 +223,7 @@ namespace Overlay
 
         private static readonly Dictionary<ChannelPointRewardType, string> m_channelPointRewardIds = new()
         {
-            { ChannelPointRewardType.CommandRequestSong,     "7d97527b-4273-4dea-b459-57ff7c2c733c" },
-            { ChannelPointRewardType.CommandSkipSong,        "4846d1ff-cd6c-4003-8ca8-55a5b6c77bb5" },
-            { ChannelPointRewardType.CommandTextToSpeech,    "6f25eefb-f4d9-4f9c-aeb9-8f03fa5218d5" },
-            { ChannelPointRewardType.IRLHydrate,             "af4cc25f-69e6-4ba9-8305-4607405c452b" },
-            { ChannelPointRewardType.IRLPostureCheck,        "99d81eb9-8666-4b14-b9cc-6599dc4622b5" },
-            { ChannelPointRewardType.IRLShowKitty,           "d2fb0d25-f8a9-4954-bbaf-26518ddda3f0" },
-            { ChannelPointRewardType.IRLShowPuppy,           "11f60d29-25aa-4f77-b1ea-c98ed235c2a5" },
-            { ChannelPointRewardType.IRLStreeeeeetch,        "d00329d6-641f-40f3-b6d0-62d2e2d19b8c" },
-            { ChannelPointRewardType.SoundAlertApplause,     "8e568083-bd18-4b64-a8fc-82bbc8d9592c" },
-            { ChannelPointRewardType.SoundAlertFirstBlood,   "5d9d0dc4-ddbd-42f2-95a0-3baa8134c3d0" },
-            { ChannelPointRewardType.SoundAlertGodlike,      "5c5eada6-c92f-43f9-ac78-179eebe395d8" },
-            { ChannelPointRewardType.SoundAlertHeartbeat,    "2a8d8760-cec7-45e2-98bb-f6f529eed596" },
-            { ChannelPointRewardType.SoundAlertHolyShit,     "c31f5531-6b50-46c6-81c5-196183f20ed5" },
-            { ChannelPointRewardType.SoundAlertHowdy,        "f928abd1-b242-4b3b-b7b2-a1afd01ec166" },
-            { ChannelPointRewardType.SoundAlertKegExplosion, "142fcecf-cc8e-44b0-ba32-ed9f9de92e0f" },
-            { ChannelPointRewardType.SoundAlertKegFuse,      "45be47a8-00fb-416e-bfb6-dad659652793" },
-            { ChannelPointRewardType.SoundAlertNice,         "ac30f8a9-4517-4b62-abd5-fc2132ab3e53" },
+
         };
         private static readonly HashSet<string> c_twitchChannelBadges = new()
         {

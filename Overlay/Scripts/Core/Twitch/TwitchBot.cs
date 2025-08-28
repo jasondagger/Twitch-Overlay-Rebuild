@@ -3014,7 +3014,7 @@ namespace Overlay
             }
             else
             {
-                m_spotifyManager.QueueRequestTrackQueueBySeachTerms(
+                m_spotifyManager.QueueRequestTrackQueueBySearchTerms(
                     twitchUserName: twitchUserName,
                     twitchChatMessageId: twitchChatMessageId,
                     searchParameters: searchText

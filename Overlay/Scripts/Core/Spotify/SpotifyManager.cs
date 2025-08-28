@@ -91,7 +91,7 @@ namespace Overlay
             }
         }
 
-        public void QueueRequestTrackQueueBySeachTerms(
+        public void QueueRequestTrackQueueBySearchTerms(
             string twitchUserName,
             string twitchChatMessageId,
             string searchParameters
